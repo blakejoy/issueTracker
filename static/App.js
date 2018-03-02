@@ -1,18 +1,10 @@
 const contentNode = document.getElementById('contents');
 
-class IssueFilter extends React.Component {
-    render() {
-        return React.createElement(
-            'div',
-            null,
-            'Thi is a placeholder for the Issue Filter.'
-        );
-    }
-}
-
 class IssueRow extends React.Component {
 
     render() {
+        var count = 0;
+        console.log(count++);
         const issue = this.props.issue;
         return React.createElement(
             'tr',
@@ -124,6 +116,16 @@ class IssueAdd extends React.Component {
     }
 }
 
+class IssueFilter extends React.Component {
+    render() {
+        return React.createElement(
+            'div',
+            null,
+            'Thi is a placeholder for the Issue Filter.'
+        );
+    }
+}
+
 const issues = [{
     id: 1, status: 'Open', owner: 'Ravan',
     created: new Date('2016-08-15'), effort: 5, completionDate: undefined,
@@ -136,6 +138,25 @@ const issues = [{
 }];
 
 class IssueList extends React.Component {
+    constructor() {
+        super();
+        this.state = { issues: issues };
+        setTimeout(this.createTestIssue.bind(this), 2000);
+    }
+    createIssue(newIssue) {
+        const newIssues = this.state.issues.slice();
+        newIssue.id = this.state.issues.length + 1;
+        newIssues.push(newIssue);
+        this.setState({ issues: newIssues });
+    }
+
+    createTestIssue() {
+        this.createIssue({
+            status: 'New', owner: 'Pieta', created: new Date(),
+            title: 'Completion date should be optional'
+        });
+    }
+
     render() {
         return React.createElement(
             'div',
@@ -147,7 +168,7 @@ class IssueList extends React.Component {
             ),
             React.createElement(IssueFilter, null),
             React.createElement('hr', null),
-            React.createElement(IssueTable, { issues: issues }),
+            React.createElement(IssueTable, { issues: this.state.issues }),
             React.createElement('hr', null),
             React.createElement(IssueAdd, null)
         );

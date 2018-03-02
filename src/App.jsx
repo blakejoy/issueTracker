@@ -4,6 +4,8 @@ const contentNode = document.getElementById('contents');
 class IssueRow extends React.Component{
   
     render(){
+        var count = 0;
+        console.log(count++);
         const issue  = this.props.issue;
         return(
             <tr>
